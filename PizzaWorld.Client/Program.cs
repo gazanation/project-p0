@@ -14,7 +14,7 @@ namespace PizzaWorld.Client
 
         static void Main(string[] args)
         {   
-            _client.MakeAStore();
+            //_client.MakeAStore();
             CustomerView();
 
         }
