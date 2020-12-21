@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+
 namespace PizzaWorld.Domain.Models
 {
     public class Store
     {
         public List<Order> Orders { get; set; } //getters and setters simply done
 
-        void CreateOrder()
+        public void CreateOrder()
         {
             //create a new order object based on list
             Orders.Add(new Order());

@@ -2,41 +2,46 @@
 using System.Collections.Generic;
 using PizzaWorld.Domain.Models;
 using PizzaWorld.Domain.Singletons;
+using System.Linq;
+
 
 namespace PizzaWorld.Client
 {
     class Program
     {
+        private static readonly ClientSingleton _client = ClientSingleton.Instance;
+        
+
         static void Main(string[] args)
-        {
-            var cs = ClientSingleton.Instance;
-            cs.MakeAStore();
-            //PrintAllStores();
+        {   
+            _client.MakeAStore();
+            CustomerView();
+
         }
 
-        static IEnumerable<Store> GetAllStores() //IEnumerable allows you to take any type of collection -- abstraction?
-        {
-            return new List<Store>()
-            {
-                new Store(),
-                new Store()
-            };
-
-           /* var l = new List<Store>();
-            l[0] = new Store();
-            l.Add(new Store());
-            l= new List<Store>()
-            {
-                new Store()
-            };*/
-        }
 
         static void PrintAllStores()
         {
-            foreach(var store in GetAllStores())
+            foreach(var store in _client.Stores)
             {
                 Console.WriteLine(store);
             }
+        }
+
+        static void CustomerView()
+        {
+            var customer = new Customer();
+
+            PrintAllStores();
+            _client.SelectStore();
+
+            customer.SelectedStore = _client.SelectStore();
+            customer.SelectedStore.CreateOrder();
+            customer.Orders.Add(customer.SelectedStore.Orders.Last());
+            customer.Orders.Last().MakePizza();
+            customer.Orders.Last().MakePizza();
+
+            Console.WriteLine(customer);
         }
     }
 }
